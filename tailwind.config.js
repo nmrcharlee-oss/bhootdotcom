@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // <--- This is new and important
+  darkMode: 'class',
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,8 +11,8 @@ module.exports = {
         sans: ['var(--font-poppins)'],
       },
       animation: {
-        'blob': 'blob 10s infinite',
-        'shine': 'shine 1.5s infinite',
+        'blob': 'blob 7s infinite', // Faster animation
+        'shine': 'shine 1.5s ease-out forwards', // Runs once, then stops
       },
       keyframes: {
         blob: {
@@ -23,7 +23,6 @@ module.exports = {
         },
         shine: {
           '0%': { transform: 'skewX(-15deg) translateX(-150%)' },
-          '50%': { transform: 'skewX(-15deg) translateX(150%)' },
           '100%': { transform: 'skewX(-15deg) translateX(150%)' },
         }
       },
