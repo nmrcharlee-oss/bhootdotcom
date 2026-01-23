@@ -11,7 +11,6 @@ export default function EmbedSection() {
   
   const { playTrack, currentTrack, isPlaying, stopCustomAudio } = usePlayer();
 
-  // Tab Switching: Stops custom audio if user goes to Apple/Spreaker
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     if (tab !== "playlist") {
@@ -23,7 +22,11 @@ export default function EmbedSection() {
     async function fetchEpisodes() {
       setLoading(true);
       try {
-        const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://www.spreaker.com/show/6810037/episodes/feed");
+        // ADDED: cache: 'no-store' to force fresh updates
+        const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://www.spreaker.com/show/6810037/episodes/feed", {
+          cache: 'no-store', 
+          next: { revalidate: 0 }
+        });
         const data = await res.json();
         
         if (data.items) {
@@ -31,7 +34,6 @@ export default function EmbedSection() {
              title: item.title,
              guid: item.guid,
              audioUrl: item.enclosure.link,
-             // rss2json often returns duration in seconds if available in enclosure
              duration: item.enclosure.duration || 0, 
              pubDate: item.pubDate
           }));
@@ -54,7 +56,6 @@ export default function EmbedSection() {
 
   return (
     <div className="w-full max-w-4xl mx-auto mb-12 flex flex-col items-center px-4">
-      {/* Tab Switcher - Mobile Optimized (wrap & sizing) */}
       <div className="flex flex-wrap justify-center gap-2 p-1 bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-full mb-8 relative transition-colors duration-500 shadow-sm">
         {["playlist", "apple", "spreaker"].map((tab) => (
           <button
@@ -81,15 +82,12 @@ export default function EmbedSection() {
       <div className="w-full flex justify-center">
         <div className="w-full max-w-[660px] p-2 rounded-2xl bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-white/30 dark:border-white/10 shadow-xl min-h-[450px]">
           <AnimatePresence mode="wait">
-            
-            {/* 1. Custom Playlist */}
             {activeTab === "playlist" && (
                <motion.div
                  key="playlist"
                  initial={{ opacity: 0, x: -10 }}
                  animate={{ opacity: 1, x: 0 }}
                  exit={{ opacity: 0, x: 10 }}
-                 // Hiding Scrollbar with Tailwind classes
                  className="w-full h-[450px] overflow-y-auto pr-0 sm:pr-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:none]"
                >
                  {loading ? (
@@ -113,13 +111,11 @@ export default function EmbedSection() {
                             }`}>
                               {isCurrent && isPlaying ? <FaPause size={12}/> : <FaPlay size={12} className="ml-1"/>}
                             </div>
-                            
                             <div className="flex-1 min-w-0 mr-2">
                                <h4 className={`text-sm font-medium truncate ${isCurrent ? "text-red-600 dark:text-red-400" : "text-gray-800 dark:text-gray-200"}`}>
                                  {ep.title}
                                </h4>
                             </div>
-
                             <div className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                                {isCurrent && isPlaying ? "Playing" : formatTime(ep.duration)}
                             </div>
@@ -131,7 +127,6 @@ export default function EmbedSection() {
                </motion.div>
             )}
 
-            {/* 2. Apple Embed */}
             {activeTab === "apple" && (
               <motion.div key="apple" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
                 <iframe
@@ -143,7 +138,6 @@ export default function EmbedSection() {
               </motion.div>
             )}
 
-            {/* 3. Spreaker Embed */}
             {activeTab === "spreaker" && (
               <motion.div key="spreaker" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full">
                 <iframe 
