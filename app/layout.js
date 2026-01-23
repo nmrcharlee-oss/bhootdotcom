@@ -1,7 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { PlayerProvider } from "./context/PlayerContext";
-import SecurityWrapper from "./components/SecurityWrapper"; // Import the new wrapper
+import SecurityWrapper from "./components/SecurityWrapper"; 
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,6 +20,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* IMPORTANT: Do NOT add onContextMenu or onDragStart here. 
+         The SecurityWrapper component handles that now.
+      */}
       <body className={`${poppins.variable} font-sans antialiased transition-colors duration-500 select-none`}>
         <PlayerProvider>
           <SecurityWrapper>
