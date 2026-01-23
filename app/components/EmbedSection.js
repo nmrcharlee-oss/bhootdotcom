@@ -5,14 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function EmbedSection() {
   const [activeTab, setActiveTab] = useState("apple");
 
-  // Logic to handle Spreaker reloading when switching tabs
   useEffect(() => {
     if (activeTab === "spreaker") {
-      // If Spreaker script is already loaded globally, trigger widget creation manually
       if (window.Spreaker && window.Spreaker.makeWidgets) {
         window.Spreaker.makeWidgets();
       } else {
-        // Otherwise load the script
         const script = document.createElement("script");
         script.src = "https://widget.spreaker.com/widgets.js";
         script.async = true;
@@ -23,20 +20,22 @@ export default function EmbedSection() {
 
   return (
     <div className="w-full max-w-4xl mx-auto mb-12 flex flex-col items-center">
-      {/* Tab Switcher */}
-      <div className="flex p-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full mb-8 relative">
+      {/* Tab Switcher - Adapted for Light/Dark */}
+      <div className="flex p-1 bg-black/5 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-full mb-8 relative transition-colors duration-500">
         {["apple", "spreaker"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`${
-              activeTab === tab ? "text-white font-bold" : "text-white/60"
+              activeTab === tab 
+                ? "text-gray-900 dark:text-white font-bold" 
+                : "text-gray-500 dark:text-white/60"
             } relative px-8 py-3 rounded-full text-sm sm:text-base z-10 transition-colors duration-300 capitalize`}
           >
             {activeTab === tab && (
               <motion.div
                 layoutId="activePill"
-                className="absolute inset-0 bg-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded-full -z-10"
+                className="absolute inset-0 bg-white dark:bg-white/20 shadow-md dark:shadow-[0_0_15px_rgba(255,255,255,0.1)] rounded-full -z-10"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
@@ -45,7 +44,6 @@ export default function EmbedSection() {
         ))}
       </div>
 
-      {/* Content Area */}
       <div className="w-full flex justify-center">
         <AnimatePresence mode="wait">
           {activeTab === "apple" ? (
@@ -54,7 +52,6 @@ export default function EmbedSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
               className="w-full max-w-[660px]"
             >
               <iframe
@@ -74,9 +71,7 @@ export default function EmbedSection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              // Added overflow-hidden and rounded-xl to fix corners
-              className="w-full max-w-[660px] bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-white/10"
+              className="w-full max-w-[660px] bg-white/40 dark:bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-black/5 dark:border-white/10 shadow-xl"
             >
               <div className="w-full">
                 <a
