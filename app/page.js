@@ -3,8 +3,8 @@ import EmbedSection from "./components/EmbedSection";
 import SocialGrid from "./components/SocialGrid";
 import Background from "./components/Background";
 import ThemeToggle from "./components/ThemeToggle";
-import HeroText from "./components/HeroText";
-import GlobalPlayer from "./components/GlobalPlayer";
+import HeroText from "./components/HeroText"; // New
+import GlobalPlayer from "./components/GlobalPlayer"; // New
 
 export default function Home() {
   return (
@@ -13,6 +13,7 @@ export default function Home() {
       <Background />
       <ThemeToggle />
       
+      {/* Brand Logo Section */}
       <div className="z-10 mt-10 relative group cursor-default">
         <div className="absolute inset-0 bg-black/10 dark:bg-white/10 blur-2xl rounded-full group-hover:bg-black/20 dark:group-hover:bg-white/20 transition-all duration-700"></div>
         <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white/50 dark:border-white/10 shadow-2xl bg-white/20 dark:bg-black/20 backdrop-blur-sm">
@@ -26,13 +27,14 @@ export default function Home() {
         </div>
       </div>
 
-      <HeroText />
+      <HeroText /> {/* Added Hero Text */}
       <EmbedSection />
       <SocialGrid />
-      <GlobalPlayer />
+      <GlobalPlayer /> {/* Added Global Player */}
 
-      {/* Footer text removed as requested */}
-      <div className="mb-20"></div>
+      <footer className="mt-auto text-gray-500 dark:text-white/20 text-xs font-light tracking-widest uppercase transition-colors duration-500 mb-20">
+        &copy; {new Date().getFullYear()} Bhoot.com
+      </footer>
     </main>
   );
 }
