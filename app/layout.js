@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { PlayerProvider } from "./context/PlayerContext"; // Import
+import { PlayerProvider } from "./context/PlayerContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
