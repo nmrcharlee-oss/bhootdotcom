@@ -20,8 +20,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* IMPORTANT: Do NOT add onContextMenu or onDragStart here. 
-         The SecurityWrapper component handles that now.
+      {/* FIX: Removed onContextMenu/onDragStart from here. 
+         SecurityWrapper handles it now.
       */}
       <body className={`${poppins.variable} font-sans antialiased transition-colors duration-500 select-none`}>
         <PlayerProvider>
