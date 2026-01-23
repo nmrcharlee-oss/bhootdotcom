@@ -32,46 +32,58 @@ export default function SocialGrid() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 mt-8 pb-20">
-      <div className="grid grid-cols-4 sm:grid-cols-8 gap-4 sm:gap-6 justify-items-center">
-        {socials.map((item) => (
-          <motion.div
-            key={item.id}
-            className="relative flex justify-center items-center"
-            initial="rest"
-            whileHover="hover"
-            animate="rest"
-          >
-            <motion.a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-20 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 shadow-lg cursor-pointer overflow-hidden"
-              variants={{
-                rest: { scale: 1, filter: "blur(0px)" },
-                hover: { scale: 1.2, backgroundColor: "rgba(255,255,255,0.2)", zIndex: 50 }
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              <item.icon className="text-2xl sm:text-3xl text-white/90" />
-            </motion.a>
-
+      
+      {/* 3. Glass Background Container for Social Section */}
+      <div className="p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl">
+        
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-6 sm:gap-8 justify-items-center">
+          {socials.map((item) => (
             <motion.div
-              className="absolute z-40 flex flex-col items-center justify-center text-center p-3 rounded-xl bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl pointer-events-none w-[180px]"
-              style={{ top: "50%", left: "50%", x: "-50%", y: "-50%" }}
-              variants={{
-                rest: { opacity: 0, scale: 0.5, display: "none" },
-                hover: { opacity: 1, scale: 1, display: "flex", y: -90 } // Moves up on hover
-              }}
-              transition={{ duration: 0.2 }}
+              key={item.id}
+              className="relative flex justify-center items-center"
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
             >
-              <item.icon className="text-2xl mb-2 text-white" />
-              <span className="font-bold text-white mb-1 text-sm">{item.name}</span>
-              <span className="text-[10px] text-gray-300 leading-tight tracking-wide uppercase">
-                 {getHoverText(item)}
-              </span>
+              {/* Main Icon (Just visual, not a link) */}
+              <motion.div
+                className="relative z-10 flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg cursor-pointer overflow-hidden"
+                variants={{
+                  rest: { scale: 1, filter: "blur(0px)" },
+                  hover: { scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)", filter: "blur(2px)" }
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <item.icon className="text-2xl sm:text-3xl text-white/90" />
+              </motion.div>
+
+              {/* Hover Card (Contains the actual Link) */}
+              <motion.div
+                className="absolute flex flex-col items-center justify-center text-center p-4 rounded-xl bg-black/80 backdrop-blur-xl border border-white/20 shadow-2xl w-[180px]"
+                // Very high Z-index to ensure it sits on top of everything
+                style={{ zIndex: 100, top: "50%", left: "50%", x: "-50%", y: "-50%" }}
+                variants={{
+                  rest: { opacity: 0, scale: 0.5, display: "none" },
+                  hover: { opacity: 1, scale: 1.1, display: "flex", y: -100 } // Moves up on hover
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                <item.icon className="text-2xl mb-2 text-white" />
+                <span className="font-bold text-white mb-2 text-sm">{item.name}</span>
+                
+                {/* The Link is here now */}
+                <a 
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] text-blue-300 leading-tight tracking-wide uppercase hover:text-white transition-colors underline decoration-blue-300/50 underline-offset-4 cursor-pointer"
+                >
+                   {getHoverText(item)}
+                </a>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
