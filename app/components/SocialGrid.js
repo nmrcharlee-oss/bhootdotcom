@@ -43,14 +43,21 @@ export default function SocialGrid() {
     return `Click to Follow Bhoot.com on ${item.name}.`;
   };
 
+  // Helper to open link without showing preview
+  const handleOpenLink = (url) => {
+    if (url && url !== "#") {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <>
-      {/* Width set to max-w-4xl to match embed section */}
+      {/* Width set to max-w-4xl to match embed section perfectly */}
       <div className="w-full max-w-4xl mx-auto px-4 mt-8 pb-32"> 
         <div className="p-8 rounded-3xl bg-white/30 dark:bg-white/5 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl transition-colors duration-500">
           
-          {/* Changed to grid-cols-4 for perfect 4x4 layout */}
-          <div className="grid grid-cols-4 gap-4 sm:gap-6 justify-items-center">
+          {/* Grid with 4 columns and Minimal Gap */}
+          <div className="grid grid-cols-4 gap-2 justify-items-center">
             {socials.map((item) => (
               <motion.div
                 key={item.id}
@@ -60,7 +67,8 @@ export default function SocialGrid() {
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/50 dark:border-white/20 shadow-lg text-gray-800 dark:text-white/90">
+                {/* Square-ish container for icons */}
+                <div className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/50 dark:border-white/20 shadow-lg text-gray-800 dark:text-white/90">
                   <item.icon className="text-2xl sm:text-3xl" />
                 </div>
               </motion.div>
@@ -102,14 +110,13 @@ export default function SocialGrid() {
 
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{selectedSocial.name}</h3>
               
-              <a 
-                href={selectedSocial.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium tracking-wide text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+              {/* Using DIV instead of A tag to hide link preview */}
+              <div 
+                onClick={() => handleOpenLink(selectedSocial.url)}
+                className="text-sm font-medium tracking-wide text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-800 dark:hover:text-blue-300 transition-colors cursor-pointer"
               >
                 {getModalText(selectedSocial)}
-              </a>
+              </div>
             </motion.div>
           </div>
         )}
