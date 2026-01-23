@@ -52,12 +52,14 @@ export default function SocialGrid() {
 
   return (
     <>
-      {/* Width set to max-w-4xl to match embed section perfectly */}
-      <div className="w-full max-w-4xl mx-auto px-4 mt-8 pb-32"> 
-        <div className="p-8 rounded-3xl bg-white/30 dark:bg-white/5 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl transition-colors duration-500">
+      <div className="w-full max-w-6xl mx-auto px-4 mt-8 pb-32"> 
+        <div className="p-4 sm:p-8 rounded-3xl bg-white/30 dark:bg-white/5 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl transition-colors duration-500">
           
-          {/* Grid with 4 columns and Minimal Gap */}
-          <div className="grid grid-cols-4 gap-2 justify-items-center">
+          {/* REVERTED GRID:
+             - grid-cols-4 (Mobile: 4 icons per row, 4 rows total)
+             - sm:grid-cols-8 (Desktop: 8 icons per row, 2 rows total)
+          */}
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
             {socials.map((item) => (
               <motion.div
                 key={item.id}
@@ -67,9 +69,12 @@ export default function SocialGrid() {
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {/* Square-ish container for icons */}
-                <div className="flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/50 dark:border-white/20 shadow-lg text-gray-800 dark:text-white/90">
-                  <item.icon className="text-2xl sm:text-3xl" />
+                {/* SMALLER MOBILE ICONS: 
+                   w-12 h-12 (Mobile) -> w-16 h-16 (Desktop)
+                   This prevents overcrowding on small screens.
+                */}
+                <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-md border border-white/50 dark:border-white/20 shadow-lg text-gray-800 dark:text-white/90">
+                  <item.icon className="text-xl sm:text-3xl" />
                 </div>
               </motion.div>
             ))}
@@ -110,7 +115,7 @@ export default function SocialGrid() {
 
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{selectedSocial.name}</h3>
               
-              {/* Using DIV instead of A tag to hide link preview */}
+              {/* DIV to hide link preview */}
               <div 
                 onClick={() => handleOpenLink(selectedSocial.url)}
                 className="text-sm font-medium tracking-wide text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-800 dark:hover:text-blue-300 transition-colors cursor-pointer"
