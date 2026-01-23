@@ -21,10 +21,12 @@ export default function SecurityWrapper({ children }) {
       }
     };
 
+    // Attach listeners to the document/window
     document.addEventListener("contextmenu", handleContextMenu);
     document.addEventListener("dragstart", handleDragStart);
     document.addEventListener("keydown", handleKeyDown);
 
+    // Cleanup listeners
     return () => {
       document.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("dragstart", handleDragStart);
