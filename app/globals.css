@@ -3,22 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background-light: #fdfbf7; /* Creamy White */
-  --background-dark: #0f0f12;  /* Deep Dark */
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+/* Security: Prevent Text Selection */
+.select-none {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+/* Security: Prevent Image Interaction */
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 body {
   /* Default to dark mode colors, but Next.js will handle the toggle */
-  background-color: var(--background-light);
+  background-color: #fdfbf7;
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* Dark mode override */
 .dark body {
-  background-color: var(--background-dark);
+  background-color: #0f0f12;
 }
 
-/* Smooth Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
