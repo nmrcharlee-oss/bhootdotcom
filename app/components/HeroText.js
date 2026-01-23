@@ -37,7 +37,7 @@ export default function HeroText() {
             // CSS for GIF Background Text
             className="absolute text-5xl sm:text-6xl font-extrabold pb-2 bg-center bg-cover"
             style={{
-              backgroundImage: "url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmVmeDV2eTc5cW43Y2VkZmsxMXpqcGR0cDRobm1taWZhOHk2aGp5bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0eYgrxgPcrDNyXOpot/giphy.gif')",
+              backgroundImage: "url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHR4ZDJ2ZGZlNTY4ZHJ2YTNqcTdvOHlvM2J2dGFkb3lnZjF1eHN5YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKOCCkDRo0VbPLq/giphy.gif')",
               color: "transparent",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
