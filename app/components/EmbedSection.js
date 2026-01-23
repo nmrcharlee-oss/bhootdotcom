@@ -5,21 +5,25 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function EmbedSection() {
   const [activeTab, setActiveTab] = useState("apple");
 
+  // Logic to handle Spreaker reloading when switching tabs
   useEffect(() => {
     if (activeTab === "spreaker") {
-      const script = document.createElement("script");
-      script.src = "https://widget.spreaker.com/widgets.js";
-      script.async = true;
-      document.body.appendChild(script);
-      return () => {
-        // Cleanup prevents duplicate scripts if user toggles quickly
-        try { document.body.removeChild(script); } catch (e) {}
-      };
+      // If Spreaker script is already loaded globally, trigger widget creation manually
+      if (window.Spreaker && window.Spreaker.makeWidgets) {
+        window.Spreaker.makeWidgets();
+      } else {
+        // Otherwise load the script
+        const script = document.createElement("script");
+        script.src = "https://widget.spreaker.com/widgets.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
     }
   }, [activeTab]);
 
   return (
     <div className="w-full max-w-4xl mx-auto mb-12 flex flex-col items-center">
+      {/* Tab Switcher */}
       <div className="flex p-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full mb-8 relative">
         {["apple", "spreaker"].map((tab) => (
           <button
@@ -41,15 +45,16 @@ export default function EmbedSection() {
         ))}
       </div>
 
-      <div className="w-full flex justify-center min-h-[450px]">
+      {/* Content Area */}
+      <div className="w-full flex justify-center">
         <AnimatePresence mode="wait">
           {activeTab === "apple" ? (
             <motion.div
               key="apple"
-              initial={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -20, scale: 0.95, filter: "blur(10px)" }}
-              transition={{ duration: 0.5, type: "spring" }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
               className="w-full max-w-[660px]"
             >
               <iframe
@@ -60,39 +65,42 @@ export default function EmbedSection() {
                 id="embedPlayer"
                 sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
                 allow="autoplay *; encrypted-media *; clipboard-write"
-                style={{ border: "0px", borderRadius: "12px", width: "100%", height: "450px", maxWidth: "660px" }}
+                style={{ border: "0px", borderRadius: "12px", width: "100%", height: "450px" }}
               ></iframe>
             </motion.div>
           ) : (
             <motion.div
               key="spreaker"
-              initial={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -20, scale: 0.95, filter: "blur(10px)" }}
-              transition={{ duration: 0.5, type: "spring" }}
-              className="w-full max-w-[660px] bg-white/5 backdrop-blur-md rounded-xl p-4 border border-white/10"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              // Added overflow-hidden and rounded-xl to fix corners
+              className="w-full max-w-[660px] bg-white/5 backdrop-blur-md rounded-xl overflow-hidden border border-white/10"
             >
-              <a
-                className="spreaker-player"
-                href="https://www.spreaker.com/podcast/bhoot-com--6810037"
-                data-resource="show_id=6810037"
-                data-width="100%"
-                data-height="350px"
-                data-theme="light"
-                data-playlist="show"
-                data-playlist-continuous="true"
-                data-chapters-image="true"
-                data-episode-image-position="left"
-                data-hide-logo="false"
-                data-hide-likes="false"
-                data-hide-comments="false"
-                data-hide-sharing="false"
-                data-hide-download="true"
-                data-title="Bhoot.com"
-                data-cover="https://d3wo5wojvuv7l.cloudfront.net/images.spreaker.com/original/3e593675285fc7f65f043fd7dde3d69d.jpg"
-              >
-                Listen to "Bhoot.com" on Spreaker.
-              </a>
+              <div className="w-full">
+                <a
+                  className="spreaker-player"
+                  href="https://www.spreaker.com/podcast/bhoot-com--6810037"
+                  data-resource="show_id=6810037"
+                  data-width="100%"
+                  data-height="350px"
+                  data-theme="light"
+                  data-playlist="show"
+                  data-playlist-continuous="true"
+                  data-chapters-image="true"
+                  data-episode-image-position="left"
+                  data-hide-logo="false"
+                  data-hide-likes="false"
+                  data-hide-comments="false"
+                  data-hide-sharing="false"
+                  data-hide-download="true"
+                  data-title="Bhoot.com"
+                  data-cover="https://d3wo5wojvuv7l.cloudfront.net/images.spreaker.com/original/3e593675285fc7f65f043fd7dde3d69d.jpg"
+                >
+                  Listen to "Bhoot.com" on Spreaker.
+                </a>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
