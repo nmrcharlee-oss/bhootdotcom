@@ -16,7 +16,7 @@ export default function HeroText() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTextState((prev) => (prev + 1) % texts.length);
-    }, 60000); // 60,000ms = 1 Minute
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
