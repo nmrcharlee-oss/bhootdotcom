@@ -16,7 +16,7 @@ export default function HeroText() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTextState((prev) => (prev + 1) % texts.length);
-    }, 5000); // Slower switch (every 5 seconds)
+    }, 60000); // 60,000ms = 1 Minute
     return () => clearInterval(interval);
   }, []);
 
@@ -25,34 +25,27 @@ export default function HeroText() {
       <h2 className="text-lg text-gray-500 dark:text-gray-400 font-light tracking-widest uppercase mb-2">
         Welcome to
       </h2>
-      <div className="h-20 relative flex justify-center items-center min-w-[300px]">
+      <div className="h-24 relative flex justify-center items-center min-w-[300px]">
         <AnimatePresence mode="wait">
-          <motion.div
+          <motion.span
             key={texts[textState]}
-            // 1. Spin Top to Bottom (Y-axis transition)
-            initial={{ opacity: 0, rotateX: -90, y: -40 }}
-            animate={{ opacity: 1, rotateX: 0, y: 0 }}
-            exit={{ opacity: 0, rotateX: 90, y: 40 }}
-            transition={{ duration: 2, ease: "easeInOut" }} // Very slow transition
-            className="absolute"
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, filter: "blur(10px)" }}
+            transition={{ duration: 2, ease: "easeInOut" }} // Slow dissolve
+            
+            // CSS for GIF Background Text
+            className="absolute text-5xl sm:text-6xl font-extrabold pb-2 bg-center bg-cover"
+            style={{
+              backgroundImage: "url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHdxZWFzb3pzMWN0OGNmNjFtZGd6cWpscGhodDRtMWt0NTBkeHYwdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FQF6J7DiHr8k6jeLyV/giphy.gif')",
+              color: "transparent",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              backgroundSize: "cover",
+            }}
           >
-            <motion.span
-              // 2. Spooky Shake & Bulb Fluctuation (Flicker)
-              animate={{ 
-                x: [0, -1, 1, -1, 0, 1, 0], // Subtle Shake
-                opacity: [1, 0.8, 0.5, 0.9, 0.6, 1] // Bulb Flicker
-              }}
-              transition={{ 
-                duration: 4, // Slow flicker loop
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              className="block text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-700 via-black to-red-700 dark:from-red-600 dark:via-gray-200 dark:to-red-600 drop-shadow-lg pb-2"
-              style={{ textShadow: "0px 0px 10px rgba(220, 38, 38, 0.3)" }}
-            >
-              {texts[textState]}
-            </motion.span>
-          </motion.div>
+            {texts[textState]}
+          </motion.span>
         </AnimatePresence>
       </div>
     </div>
