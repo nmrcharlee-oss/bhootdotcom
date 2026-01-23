@@ -45,9 +45,11 @@ export default function SocialGrid() {
 
   return (
     <>
-      <div className="w-full max-w-6xl mx-auto px-4 mt-8 pb-20">
+      <div className="w-full max-w-6xl mx-auto px-4 mt-8 pb-32"> {/* Increased padding-bottom for player */}
         <div className="p-8 rounded-3xl bg-white/30 dark:bg-white/5 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl transition-colors duration-500">
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-6 sm:gap-8 justify-items-center">
+          
+          {/* UPDATED GAP HERE: Reduced from gap-6 sm:gap-8 to gap-3 sm:gap-4 */}
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 sm:gap-4 justify-items-center">
             {socials.map((item) => (
               <motion.div
                 key={item.id}
