@@ -16,7 +16,7 @@ export default function HeroText() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTextState((prev) => (prev + 1) % texts.length);
-    }, 30000);
+    }, 15000);
     return () => clearInterval(interval);
   }, []);
 
@@ -37,7 +37,7 @@ export default function HeroText() {
             // CSS for GIF Background Text
             className="absolute text-5xl sm:text-6xl font-extrabold pb-2 bg-center bg-cover"
             style={{
-              backgroundImage: "url('https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHdxZWFzb3pzMWN0OGNmNjFtZGd6cWpscGhodDRtMWt0NTBkeHYwdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FQF6J7DiHr8k6jeLyV/giphy.gif')",
+              backgroundImage: "url('https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmVmeDV2eTc5cW43Y2VkZmsxMXpqcGR0cDRobm1taWZhOHk2aGp5bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0eYgrxgPcrDNyXOpot/giphy.gif')",
               color: "transparent",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
