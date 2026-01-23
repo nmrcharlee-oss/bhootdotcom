@@ -22,11 +22,9 @@ export default function EmbedSection() {
     async function fetchEpisodes() {
       setLoading(true);
       try {
-        // ADDED: cache: 'no-store' to force fresh updates
-        const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://www.spreaker.com/show/6810037/episodes/feed", {
-          cache: 'no-store', 
-          next: { revalidate: 0 }
-        });
+        // FIX: Removed 'cache: no-store' and added timestamp query param to bypass cache
+        const timestamp = new Date().getTime();
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.spreaker.com/show/6810037/episodes/feed&t=${timestamp}`);
         const data = await res.json();
         
         if (data.items) {
