@@ -8,12 +8,31 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: radial-gradient(circle at 50% 10%, #1a1a2e, #000000);
+  /* 1. Set the image as fixed background */
+  background-image: url('https://www.imghippo.com/i/VOLX4517Rwo.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Smooth Scrollbar */
+/* 2. Add a pseudo-element for the blur overlay so the content stays sharp */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit; 
+  backdrop-filter: blur(15px) brightness(0.6); /* Adjust blur amount here */
+  z-index: -1;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
